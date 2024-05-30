@@ -1,0 +1,9 @@
+{
+	"name": "AzureDFaccount1",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "93d4fe77-4b65-47b1-a18b-ac60b8860c94",
+		"tenantId": "a7ae0130-6eaa-4bd2-8824-a9accf951f37"
+	}
+}

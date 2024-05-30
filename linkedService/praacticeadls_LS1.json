@@ -1,0 +1,12 @@
+{
+	"name": "praacticeadls_LS1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://adlsstorageaccountno1.dfs.core.windows.net/",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDc0NDNCQ0Q2LTA4MEQtNDVERC1COEZBLUNERjUzNDhGNzUzMF9kYmE3NjI0Ny1kYTZkLTRhMGEtYmQ3Ny04MjgwNTkzMDc3MTciDQp9"
+		}
+	}
+}
