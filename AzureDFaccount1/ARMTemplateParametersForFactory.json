@@ -1,0 +1,81 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "AzureDFaccount1"
+		},
+		"ADLS_LS01_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorageLS001_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDatabasels2_password": {
+			"value": ""
+		},
+		"Azuresqldatabasels1_password": {
+			"value": ""
+		},
+		"SQL_LS01_password": {
+			"value": ""
+		},
+		"praacticeadls_LS1_accountKey": {
+			"value": ""
+		},
+		"practiceLS01_accountKey": {
+			"value": ""
+		},
+		"practiceLS1_password": {
+			"value": ""
+		},
+		"ADLS_LS01_properties_typeProperties_url": {
+			"value": "https://adlsstorageaccountno1.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorageLS001_properties_typeProperties_url": {
+			"value": "https://adlsstorageaccountno1.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabasels2_properties_typeProperties_server": {
+			"value": "myadfserver01.database.windows.net"
+		},
+		"AzureSqlDatabasels2_properties_typeProperties_database": {
+			"value": "myazuresqlDB01"
+		},
+		"AzureSqlDatabasels2_properties_typeProperties_userName": {
+			"value": "azurelib"
+		},
+		"Azuresqldatabasels1_properties_typeProperties_server": {
+			"value": "myadfserver01.database.windows.net"
+		},
+		"Azuresqldatabasels1_properties_typeProperties_database": {
+			"value": "myazuresqlDB01"
+		},
+		"Azuresqldatabasels1_properties_typeProperties_userName": {
+			"value": "azurelib"
+		},
+		"SQL_LS01_properties_typeProperties_server": {
+			"value": "myadfserver01.database.windows.net"
+		},
+		"SQL_LS01_properties_typeProperties_database": {
+			"value": "myazuresqlDB01"
+		},
+		"SQL_LS01_properties_typeProperties_userName": {
+			"value": "azurelib"
+		},
+		"praacticeadls_LS1_properties_typeProperties_url": {
+			"value": "https://adlsstorageaccountno1.dfs.core.windows.net/"
+		},
+		"practiceLS01_properties_typeProperties_url": {
+			"value": "https://adlsstorageaccountno1.dfs.core.windows.net/"
+		},
+		"practiceLS1_properties_typeProperties_server": {
+			"value": "myadfserver01.database.windows.net"
+		},
+		"practiceLS1_properties_typeProperties_database": {
+			"value": "myazuresqlDB01"
+		},
+		"practiceLS1_properties_typeProperties_userName": {
+			"value": "azurelib"
+		}
+	}
+}
