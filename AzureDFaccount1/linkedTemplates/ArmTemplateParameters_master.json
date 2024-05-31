@@ -17,6 +17,12 @@
 		"Azuresqldatabasels1_password": {
 			"value": ""
 		},
+		"LS_to_ADLS007_accountKey": {
+			"value": ""
+		},
+		"LS_to_SQL007_password": {
+			"value": ""
+		},
 		"SQL_LS01_password": {
 			"value": ""
 		},
@@ -51,6 +57,18 @@
 			"value": "myazuresqlDB01"
 		},
 		"Azuresqldatabasels1_properties_typeProperties_userName": {
+			"value": "azurelib"
+		},
+		"LS_to_ADLS007_properties_typeProperties_url": {
+			"value": "https://adlsstorageaccountno1.dfs.core.windows.net/"
+		},
+		"LS_to_SQL007_properties_typeProperties_server": {
+			"value": "myadfserver01.database.windows.net"
+		},
+		"LS_to_SQL007_properties_typeProperties_database": {
+			"value": "myazuresqlDB01"
+		},
+		"LS_to_SQL007_properties_typeProperties_userName": {
 			"value": "azurelib"
 		},
 		"SQL_LS01_properties_typeProperties_server": {
