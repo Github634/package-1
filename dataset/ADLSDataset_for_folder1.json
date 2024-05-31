@@ -1,5 +1,5 @@
 {
-	"name": "Dataset_for_ADLS",
+	"name": "ADLSDataset_for_folder1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_to_ADLS007",
@@ -10,13 +10,12 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "salesorderheader",
+				"folderPath": "Folder01",
 				"fileSystem": "landingdata"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
-			"nullValue": "NA",
 			"quoteChar": "\""
 		},
 		"schema": []
