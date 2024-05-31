@@ -1,0 +1,26 @@
+{
+	"name": "Dataset_for_SQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_to_SQL007",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "sr_no",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tab1"
+		}
+	}
+}
