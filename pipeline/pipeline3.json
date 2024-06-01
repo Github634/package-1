@@ -40,6 +40,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"expression": {
+						"value": "@greaterOrEquals(activity('get record count').output.FirstRow.totalrecordcount,500)",
+						"type": "Expression"
+					},
 					"ifTrueActivities": [
 						{
 							"name": "Copy data1",
@@ -82,13 +86,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "Dataset_for_SQL",
+									"referenceName": "CustomerSQLDataset",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "Dataset_for_ADLS",
+									"referenceName": "genericfolder_ADLS",
 									"type": "DatasetReference"
 								}
 							]
