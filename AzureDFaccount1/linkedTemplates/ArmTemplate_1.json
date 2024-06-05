@@ -6,132 +6,67 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "AzureDFaccount1"
-		},
-		"ADLS_LS01_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'ADLS_LS01'"
-		},
-		"AzureDataLakeStorageLS001_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorageLS001'"
-		},
-		"AzureSqlDatabasels2_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'AzureSqlDatabasels2'"
-		},
-		"Azuresqldatabasels1_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'Azuresqldatabasels1'"
-		},
-		"LS_to_ADLS007_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'LS_to_ADLS007'"
-		},
-		"LS_to_SQL007_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'LS_to_SQL007'"
-		},
-		"SQL_LS01_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SQL_LS01'"
-		},
-		"praacticeadls_LS1_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'praacticeadls_LS1'"
-		},
-		"practiceLS01_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'practiceLS01'"
-		},
-		"practiceLS1_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'practiceLS1'"
-		},
-		"ADLS_LS01_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://adlsstorageaccountno1.dfs.core.windows.net/"
-		},
-		"AzureDataLakeStorageLS001_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://adlsstorageaccountno1.dfs.core.windows.net/"
-		},
-		"AzureSqlDatabasels2_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "myadfserver01.database.windows.net"
-		},
-		"AzureSqlDatabasels2_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "myazuresqlDB01"
-		},
-		"AzureSqlDatabasels2_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "azurelib"
-		},
-		"Azuresqldatabasels1_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "myadfserver01.database.windows.net"
-		},
-		"Azuresqldatabasels1_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "myazuresqlDB01"
-		},
-		"Azuresqldatabasels1_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "azurelib"
-		},
-		"LS_to_ADLS007_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://adlsstorageaccountno1.dfs.core.windows.net/"
-		},
-		"LS_to_SQL007_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "myadfserver01.database.windows.net"
-		},
-		"LS_to_SQL007_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "myazuresqlDB01"
-		},
-		"LS_to_SQL007_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "azurelib"
-		},
-		"SQL_LS01_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "myadfserver01.database.windows.net"
-		},
-		"SQL_LS01_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "myazuresqlDB01"
-		},
-		"SQL_LS01_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "azurelib"
-		},
-		"praacticeadls_LS1_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://adlsstorageaccountno1.dfs.core.windows.net/"
-		},
-		"practiceLS01_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://adlsstorageaccountno1.dfs.core.windows.net/"
-		},
-		"practiceLS1_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "myadfserver01.database.windows.net"
-		},
-		"practiceLS1_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "myazuresqlDB01"
-		},
-		"practiceLS1_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "azurelib"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/genericfolder_ADLS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_to_ADLS007",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "Generic",
+						"fileSystem": "landingdata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sql_dataset01')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQL_LS01",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "sr_no",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "name",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tab1"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Dynamic_folder_name')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -195,8 +130,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/sql_dataset01')]",
-				"[concat(variables('factoryId'), '/datasets/adls_generic_dataset')]"
+				"[concat(variables('factoryId'), '/datasets/sql_dataset01')]"
 			]
 		},
 		{
@@ -261,10 +195,7 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Generic_SQL_dataset')]",
-				"[concat(variables('factoryId'), '/datasets/adls_generic_dataset')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Incremental_pipline_01')]",
@@ -473,8 +404,6 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/HW_DATASET')]",
-				"[concat(variables('factoryId'), '/datasets/CustomerSQLDataset')]",
 				"[concat(variables('factoryId'), '/datasets/genericfolder_ADLS')]"
 			]
 		},
@@ -544,10 +473,7 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Dataset_for_SQL')]",
-				"[concat(variables('factoryId'), '/datasets/Dataset_for_ADLS')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/foreach_pipline_multitable_injection')]",
@@ -631,10 +557,7 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Generic_SQL_dataset')]",
-				"[concat(variables('factoryId'), '/datasets/adls_generic_dataset')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/getmetadata')]",
@@ -733,8 +656,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/sql_dataset01')]",
-				"[concat(variables('factoryId'), '/datasets/adls_dataset01')]"
+				"[concat(variables('factoryId'), '/datasets/sql_dataset01')]"
 			]
 		},
 		{
@@ -840,10 +762,7 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/CustomerSQLDataset')]",
-				"[concat(variables('factoryId'), '/datasets/Dataset_for_ADLS')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pipeline3')]",
@@ -959,8 +878,6 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Dataset_for_SQL')]",
-				"[concat(variables('factoryId'), '/datasets/CustomerSQLDataset')]",
 				"[concat(variables('factoryId'), '/datasets/genericfolder_ADLS')]"
 			]
 		},
@@ -1062,678 +979,6 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/CustomerSQLDataset')]",
-				"[concat(variables('factoryId'), '/datasets/HW_update_in_SQL')]",
-				"[concat(variables('factoryId'), '/datasets/HW_DATASET')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ADLSDataset_for_folder1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_to_ADLS007",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "Folder01",
-						"fileSystem": "landingdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_to_ADLS007')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CustomerSQLDataset')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_to_SQL007",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CustomerID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "NameStyle",
-						"type": "bit"
-					},
-					{
-						"name": "Title",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FirstName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MiddleName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Suffix",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CompanyName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SalesPerson",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EmailAddress",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Phone",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PasswordHash",
-						"type": "varchar"
-					},
-					{
-						"name": "PasswordSalt",
-						"type": "varchar"
-					},
-					{
-						"name": "rowguid",
-						"type": "uniqueidentifier"
-					},
-					{
-						"name": "ModifiedDate",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "SalesLT",
-					"table": "Customer"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_to_SQL007')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Dataset_for_ADLS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_to_ADLS007",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "salesorderheader",
-						"fileSystem": "landingdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"nullValue": "NA",
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_to_ADLS007')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Dataset_for_SQL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_to_SQL007",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "sr_no",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "name",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "tab1"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_to_SQL007')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Generic_SQL_dataset')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_to_SQL007",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"SchemaName": {
-						"type": "string"
-					},
-					"TableName": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": {
-						"value": "@dataset().SchemaName",
-						"type": "Expression"
-					},
-					"table": {
-						"value": "@dataset().TableName",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_to_SQL007')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HW_DATASET')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_to_ADLS007",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "HighWatermarkFile.txt",
-						"fileSystem": "landingdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": false,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "1990-01-01 00:00:00",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_to_ADLS007')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HW_update_in_SQL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_to_SQL007",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "tablename",
-						"type": "varchar"
-					},
-					{
-						"name": "modifieddate",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "hw"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_to_SQL007')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/XmlDS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_to_ADLS007",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Xml",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "Folder2",
-						"fileSystem": "landingdata"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_to_ADLS007')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/adls_dataset01')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADLS_LS01",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "landingdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLS_LS01')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/adls_generic_dataset')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_to_ADLS007",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"FolderName": {
-						"type": "string"
-					},
-					"FileName": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().FileName",
-							"type": "Expression"
-						},
-						"folderPath": {
-							"value": "@dataset().FolderName",
-							"type": "Expression"
-						},
-						"fileSystem": "landingdata"
-					}
-				},
-				"schema": {
-					"type": "object",
-					"properties": {
-						"CustomerID": {
-							"type": "integer"
-						},
-						"NameStyle": {
-							"type": "boolean"
-						},
-						"Title": {
-							"type": "string"
-						},
-						"FirstName": {
-							"type": "string"
-						},
-						"MiddleName": {
-							"type": "string"
-						},
-						"LastName": {
-							"type": "string"
-						},
-						"Suffix": {
-							"type": "string"
-						},
-						"CompanyName": {
-							"type": "string"
-						},
-						"SalesPerson": {
-							"type": "string"
-						},
-						"EmailAddress": {
-							"type": "string"
-						},
-						"Phone": {
-							"type": "string"
-						},
-						"PasswordHash": {
-							"type": "string"
-						},
-						"PasswordSalt": {
-							"type": "string"
-						},
-						"rowguid": {
-							"type": "string"
-						},
-						"ModifiedDate": {
-							"type": "string"
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_to_ADLS007')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/genericfolder_ADLS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_to_ADLS007",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "Generic",
-						"fileSystem": "landingdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_to_ADLS007')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/sql_dataset01')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SQL_LS01",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "sr_no",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "name",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "tab1"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SQL_LS01')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ADLS_LS01')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('ADLS_LS01_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('ADLS_LS01_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorageLS001')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('AzureDataLakeStorageLS001_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDataLakeStorageLS001_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabasels2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('AzureSqlDatabasels2_properties_typeProperties_server')]",
-					"database": "[parameters('AzureSqlDatabasels2_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"hostNameInCertificate": "",
-					"authenticationType": "SQL",
-					"userName": "[parameters('AzureSqlDatabasels2_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('AzureSqlDatabasels2_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Azuresqldatabasels1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('Azuresqldatabasels1_properties_typeProperties_server')]",
-					"database": "[parameters('Azuresqldatabasels1_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"hostNameInCertificate": "",
-					"authenticationType": "SQL",
-					"userName": "[parameters('Azuresqldatabasels1_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('Azuresqldatabasels1_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_to_ADLS007')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('LS_to_ADLS007_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('LS_to_ADLS007_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_to_SQL007')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('LS_to_SQL007_properties_typeProperties_server')]",
-					"database": "[parameters('LS_to_SQL007_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"hostNameInCertificate": "",
-					"authenticationType": "SQL",
-					"userName": "[parameters('LS_to_SQL007_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('LS_to_SQL007_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SQL_LS01')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('SQL_LS01_properties_typeProperties_server')]",
-					"database": "[parameters('SQL_LS01_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"hostNameInCertificate": "",
-					"authenticationType": "SQL",
-					"userName": "[parameters('SQL_LS01_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SQL_LS01_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/praacticeadls_LS1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('praacticeadls_LS1_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('praacticeadls_LS1_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/practiceLS01')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('practiceLS01_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('practiceLS01_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/practiceLS1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('practiceLS1_properties_typeProperties_server')]",
-					"database": "[parameters('practiceLS1_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"hostNameInCertificate": "",
-					"authenticationType": "SQL",
-					"userName": "[parameters('practiceLS1_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('practiceLS1_password')]"
-					}
-				}
 			},
 			"dependsOn": []
 		}
