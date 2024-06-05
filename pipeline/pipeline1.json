@@ -5,7 +5,14 @@
 			{
 				"name": "Copy data as xml into folder2",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "get id from lastname",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -17,7 +24,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select count(*) from dbo.tab1;",
+						"sqlReaderQuery": {
+							"value": "select * from saleslt.customer where customerid= @{activity('get id from lastname').output.firstRow.id}",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -44,7 +54,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Dataset_for_SQL",
+						"referenceName": "CustomerSQLDataset",
 						"type": "DatasetReference"
 					}
 				],
@@ -54,6 +64,31 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "get id from lastname",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select customerid as id from saleslt.customer where lastname='gates';",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "CustomerSQLDataset",
+						"type": "DatasetReference"
+					}
+				}
 			}
 		],
 		"annotations": []

@@ -1,5 +1,5 @@
 {
-	"name": "Get HW file date_time",
+	"name": "Incremental_pipline_01",
 	"properties": {
 		"activities": [
 			{
@@ -87,7 +87,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from saleslt.customer where modifieddate > '@{activity('Get data from HW file').output.firstRow.prop_0}' and modifieddate <= '@{activity('Get_last_modified_date from SQLdb').output.firstRow.lastrecorddate}'",
+							"value": "select * from saleslt.customer where modifieddate > '@{activity('Get data from HW file').output.firstRow.prop_0}' and modifieddate <= '@{activity('Get_last_modified_date from SQLdb').output.firstRow.date2}'",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -128,11 +128,11 @@
 				]
 			},
 			{
-				"name": "DW update",
+				"name": "update hw",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "incremental data copy ",
+						"activity": "incremental data copy",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -150,7 +150,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select '@{activity('incremental data copy ').output.pipelineReturnValue}'",
+							"value": "select '@{activity('Get_last_modified_date from SQLdb').output.firstRow.date2}'",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
