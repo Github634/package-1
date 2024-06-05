@@ -1,0 +1,25 @@
+{
+	"name": "HW_update_in_SQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_to_SQL007",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "tablename",
+				"type": "varchar"
+			},
+			{
+				"name": "modifieddate",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "hw"
+		}
+	}
+}
