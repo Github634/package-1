@@ -1,9 +1,10 @@
 {
-	"name": "Incremental_pipline_01",
+	"name": "Incremental_pipline_using_table_01",
 	"properties": {
 		"activities": [
 			{
-				"name": "Get data from HW file",
+				"name": "date1",
+				"description": "",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -16,28 +17,23 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select modifieddate from hw where tablename='date1';",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "HW_DATASET",
+						"referenceName": "Dataset_for_SQL",
 						"type": "DatasetReference"
 					}
 				}
 			},
 			{
-				"name": "Get_last_modified_date from SQLdb",
+				"name": "date2",
 				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "Get data from HW file",
+						"activity": "date1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -54,7 +50,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select max(ModifiedDate) as date2 from [SalesLT].[Customer];",
+						"sqlReaderQuery": "select max(modifieddate) as date2 from saleslt.customer;",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -69,7 +65,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Get_last_modified_date from SQLdb",
+						"activity": "date2",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -87,7 +83,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from saleslt.customer where modifieddate > '@{activity('Get data from HW file').output.firstRow.prop_0}' and modifieddate <= '@{activity('Get_last_modified_date from SQLdb').output.firstRow.date2}'",
+							"value": "select * from saleslt.customer where modifieddate > '@{activity('date1').output.firstRow.modifieddate}' and modifieddate <= '@{activity('date2').output.firstRow.date2}'",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -128,7 +124,7 @@
 				]
 			},
 			{
-				"name": "update hw",
+				"name": "update hw in sqldb",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -150,63 +146,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select '@{activity('Get_last_modified_date from SQLdb').output.firstRow.date2}'",
-							"type": "Expression"
-						},
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "CustomerSQLDataset",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "HW_DATASET",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
-				"name": "update hw_copy1",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": {
-							"value": "select '@{activity('Get_last_modified_date from SQLdb').output.firstRow.date2}'",
+							"value": "update hw set modifieddate='@{activity('date2').output.firstRow.date2}' where tablename='date2'",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
