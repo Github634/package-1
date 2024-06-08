@@ -1,0 +1,28 @@
+{
+	"name": "DS_JSON2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "practiceLS01",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": "Folder1",
+				"fileSystem": "landingdata"
+			}
+		},
+		"schema": {}
+	}
+}
